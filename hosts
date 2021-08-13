@@ -1,0 +1,5 @@
+[all]
+161.35.132.163
+[all:vars]
+ansible_ssh_user=root
+ansible_python_interpreter=/usr/bin/python3
