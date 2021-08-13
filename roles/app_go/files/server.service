@@ -1,0 +1,11 @@
+[Unit]
+Description=Server-on Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/main
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

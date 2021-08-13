@@ -1,0 +1,21 @@
+---
+# tasks file for nginx-settings
+- name: Copy app_go
+  copy:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    mode: "{{item.mode}}"
+    owner: root
+    group: root
+
+  loop:
+    -  { src: 'main' , dest: '/usr/bin/', mode: '0744'}
+    - { src: 'server.service' , dest: '/etc/systemd/system/', mode: '0774'}
+  notify: enable service
+
+- name: Allow related and established connections
+  ansible.builtin.iptables:
+    chain: INPUT
+    ctstate: ESTABLISHED,RELATED
+    jump: ACCEPT
+  become: yes
