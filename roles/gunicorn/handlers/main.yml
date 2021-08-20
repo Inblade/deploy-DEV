@@ -1,0 +1,11 @@
+---
+# handlers file for gunicorn
+- name: enable_service
+  service:
+    name: servpy.service
+    enabled: yes
+
+- name: start_service
+  service:
+    name: servpy.service
+    state: started

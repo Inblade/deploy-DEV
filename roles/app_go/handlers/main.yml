@@ -1,0 +1,12 @@
+---
+# handlers file for nginx-settings
+
+- name: enable_service
+  service:
+    name: server
+    enabled: yes
+
+- name: start_service
+  service:
+    name: server
+    state: started

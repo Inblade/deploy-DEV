@@ -1,0 +1,8 @@
+---
+# defaults file for gunicorn
+
+# Install with the pip installer (pip) or from source (source) or from package
+# (package)
+gunicorn_install_method: "package"
+# The url for the source
+gunicorn_install_url: "http://github.com/benoitc/gunicorn/tarball/master"

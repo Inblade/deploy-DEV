@@ -1,0 +1,74 @@
+---
+# tasks file for gunicorn
+
+- name: Update APT cache
+  raw: apt-get update
+  become: True
+  changed_when: false
+
+- name: Install python
+  raw: apt-get install -yq python
+  become: True
+  changed_when: false
+
+- name: Install or update pip
+  raw: apt-get install -yq pip
+  become: True
+  changed_when: false
+
+- name: gunicorn | install gunicorn with pip
+  command: pip install gunicorn
+
+#- name: Create gunicorn folder
+#  file:
+#    path=/tmp/gunicorn/
+#    state=directory
+
+#- name: gunicorn | download gunicorn source
+#  get_url:
+#    url: "{{gunicorn_install_url}}"
+#    dest: "/tmp/gunicorn.tar.gz"
+
+#- name: Extract foo.tgz into /var/lib/foo
+#  ansible.builtin.unarchive:
+#    src: /tmp/gunicorn.tar.gz
+#    dest: /tmp/gunicorn/
+#    remote_src: yes
+
+#- name: gunicorn | Extract tarball
+#  command: tar -xvzf /tmp/gunicorn.tar.gz
+
+#- name: gunicorn | Install gunicorn
+#  command: python /tmp/gunicorn/benoitc-gunicorn-1299ea9/setup.py install
+
+#- name: gunicorn add package repository
+#  apt_repository: repo='ppa:gunicorn/ppa'
+
+- name: gunicorn | Make sure the packages are installed (Debian)
+  apt:
+    pkg: gunicorn
+    state: present
+
+- name: Copy serv.py
+  copy:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    mode: "{{item.mode}}"
+    owner: root
+    group: root
+
+  loop:
+    - { src: 'server.py', dest: '/usr/bin/', mode: '0744'}
+    - { src: 'servpy.service' , dest: '/etc/systemd/system/', mode: '0774'}
+  notify:
+    - enable_service
+    - start_service
+
+#- include: pip.yml
+#  when: gunicorn_install_method == "pip"
+#- include: source.yml
+#  when: gunicorn_install_method == "source"
+#- include: package.yml
+#  when: gunicorn_install_method == "package"
+#- include: serv.yml
+#  when: gunicorn_install_method == "serv"

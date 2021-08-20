@@ -1,0 +1,11 @@
+[Unit]
+Description=serv_py
+
+[Service]
+Type=simple
+WorkingDirectory=/usr/bin/
+ExecStart=gunicorn -b 0.0.0.0:8081 server:process_http_request
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
