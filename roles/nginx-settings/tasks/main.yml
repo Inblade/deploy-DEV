@@ -15,20 +15,19 @@
     nginx_web_owner: nginx
   when: ansible_os_family == "RedHat"
 
-- block: # =======Block for Ubuntu=======
-
-  - name: Update package list & Install nginx os_family == "Debian"
-    apt:
-      name=nginx
-      cache_valid_time=3600
-      update_cache=yes
-    notify: Starting service nginx
-    when: ansible_os_family == "Debian"
-
+- name: Update package list & Install nginx
+  apt:
+    name=nginx
+    cache_valid_time=3600
+    update_cache=yes
+  notify: Starting service nginx
+  when: ansible_os_family == "Debian"
 
 - name: Create site folder
   file:
     path=/home/{{ domain_name }}
+    path=/var/www/html/{{ domain_name }}/logs/
+    path=/var/www/html/{{ domain_name }}/logs/
     state=directory
 
 - name: Generate (HTTP nginx.conf; title page)
@@ -38,5 +37,5 @@
     mode=0644
   loop:
     -  { src: 'nginx.j2' , dest: '{{ nginx_config_remote }}/nginx.conf'}
-    -  { src: 'index.j2' , dest: '{{ site_folder_remote }}/{{ domain_name }}/index.j2'}
+    -  { src: 'nginx.j2' , dest: '/usr/share/nginx/nginx.conf'}
   notify: Reload nginx

@@ -1,6 +1,0 @@
----
-# file: gunicorn/tasks/pip.yml
-
-- name: gunicorn | install gunicorn with pip
-  command: pip install gunicorn
-  sudo: yes
