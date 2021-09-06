@@ -1,5 +1,0 @@
----
-# handlers file for nginx-settings
-
-- name: enable service
-  systemd: state=started name=server.service enabled=yes
