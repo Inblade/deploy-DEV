@@ -1,6 +1,6 @@
 do_token = "........"
 //my_ssh_devops    = "....."
-rebrain          = "......."
+another          = "......."
 ssh_fingerprint  = "......"
 aws_access_key   = "....."
 aws_secret_key   = "....."
